@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+    <div class="container-fluid w-75 mx-auto m-5 text-center p-3 bg-light shadow rounded border border-primary">
+        <h1 class="display-3 text-dark ">Your Activities</h1>
+        <p class="mb-5">It is the {% now "jS \o\f F" %}</p>
+        <hr>
+        {% for date, plan in plans %}
+        <h2 class="text-dark mt-3 mb-3 p-2"><a href="{{ date.get_absolute_url }}">{{ date.date }}</a></h2>
+                {% for act in plan %}
+                <h2>
+                    {% if act.completed %}
+                    <a class="text-light badge badge-pill badge-info" href="{{ act.get_absolute_url }}">{{ act.title }}</a>
+                    {% else %}
+                    <a class="text-light badge badge-pill badge-secondary" href="{{ act.get_absolute_url }}">{{ act.title }}</a>
+                    {% endif %}
+                    
+                </h2>
+                {% endfor %}
+                <hr class="my-4">
+        {% empty %}
+        <p>No activities yet, add some below!</p>
+        {% endfor %}
+        <h3>Go to <a href="{% url 'task_home' %}">tasks</a></h3>
+    </div>
+    
+{% endblock %}

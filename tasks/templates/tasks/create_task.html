@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Create a Task{% endblock %}
+{% block body %}
+<div class="container mx-auto mt-5 p-5 shadow rounded border border-primary text-center">
+<h1 class="mb-5">Create a Task</h1>
+<hr class="my-4">
+<form method="post" action="/tasks/create/">
+    {% csrf_token %}
+    {{ form.title|as_crispy_field }}
+    {{ form.description|as_crispy_field }}
+    <div class="row">
+        <div class="col-6">
+          {{ form.time|as_crispy_field }}
+        </div>
+        <div class="col-6">
+          {{ form.date|as_crispy_field }}
+        </div>
+      </div>
+    {{ form.priority|as_crispy_field }}
+<button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</div>
+{% endblock %}

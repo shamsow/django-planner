@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block body %}
+ 
+    <div class="container mx-auto mt-5 p-5 shadow rounded border border-primary">
+      <h1 class="mb-5">Log in</h1>
+      <div class="log_form">
+      {% if message %}
+      <p>
+        {{ message }}
+      </p>
+      {% endif %}
+      <form action="{% url 'login' %}" method="post">
+      {% csrf_token %}
+        <!-- <fieldset>
+        <div class="form-group">
+          <input class="form-control form-control-lg search_query" name="username" type="text" placeholder="Username" required autofocus/>
+          <input class="form-control form-control-lg search_query" name="password" type="password" placeholder="Password" required/>
+          
+        </div>
+        </fieldset> -->
+        <div class="form-group">
+          <label for="exampleInputEmail1">Username</label>
+          <input class="form-control form-control-lg search_query" name="username" type="text" placeholder="Username" required autofocus/>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input class="form-control form-control-lg search_query" name="password" type="password" placeholder="Password" required/>
+        </div>
+        <button type="submit" class="btn btn-outline-secondary btn-lg">Login</button>
+      </form>
+
+      
+
+      <p>Don't have an account? <a href="{% url 'register' %}">Register</a> here</p>
+      </div>
+    </div>
+{% endblock %}
