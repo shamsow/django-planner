@@ -10,12 +10,13 @@ def home(request):
     if request.user.is_authenticated:
         user_id = request.user.id
         dates = Activity.objects.filter(profile_id=user_id)
+        # Get all the dates that contain tasks
         dates = [i for i in dates if i.task_set.all()]
-        # print(dates)
+        # Get all the tasks for each date
         activities = []
         for date in dates:
             activities.append(date.task_set.all())
-
+        # Combine the dates and tasks in to a list of tuples
         plans = zip(dates, activities)
         print(plans)
         context = {

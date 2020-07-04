@@ -8,6 +8,7 @@ class TaskForm(forms.ModelForm):
     description = forms.CharField(widget=forms.Textarea(attrs={"class":"form"}))
     time = forms.TimeField(widget=forms.TimeInput(attrs={"type": "time", "step": "1"}))
     date = forms.DateField(widget=forms.DateInput(attrs={"type": "date", "min": date_now}))
+    
     class Meta:
         model = Task
         fields = [

@@ -8,7 +8,9 @@ from dashboard.models import Activity
 def home(request):
     user_id = request.user.id
     objs = Task.objects.filter(profile_id=user_id)
+    # Get a set of all the unique dates
     dates = set([i['date'] for i in Task.objects.filter(profile_id=user_id).values('date')])
+    # Create a list of queryset objects divided by date
     divisions = [objs.filter(date=i) for i in dates]
     context = {
         "divs": divisions
@@ -20,16 +22,16 @@ def create_task(request):
     if form.is_valid():
         user_id = request.user.id
         new_task = form.save(commit=False)
+        # Try to get the activity row for the current date, otherwise create it
         try:
             activity = Activity.objects.get(profile_id= user_id, date=new_task.date)
         except:
             activity = Activity.objects.create(profile_id=user_id, date=new_task.date)
             activity.save()
+        # Add the remaining fields to the task and save
         new_task.profile_id = user_id
         new_task.activity = activity
-        # activity.task_set.add(new_task)
         new_task.save()
-        # form = TaskForm()
         return redirect("task_home")
     context = {
         'form': form
@@ -48,6 +50,8 @@ def task_detail(request, id):
 
 
 def task_update(request, id):
+    ## Currently malfunctioning for some reason
+    ## The object should be getting updated by this method but it creates a new object with the changed parameters
     instance = get_object_or_404(Task, id=id)
     form = TaskForm(request.POST or None, instance=instance)
     if form.is_valid():
